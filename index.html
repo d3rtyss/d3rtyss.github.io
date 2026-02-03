@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameGold - Продажа игровой валюты</title>
+    <title>D3rtyShop - Магазин игровой валюты</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -29,7 +29,7 @@
         header {
             background-color: #1e293b;
             padding: 1rem 0;
-            border-bottom: 2px solid #3b82f6;
+            border-bottom: 2px solid #dc2626;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -47,7 +47,7 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #3b82f6;
+            color: #dc2626;
         }
         
         .logo i {
@@ -69,12 +69,25 @@
         }
         
         nav a:hover {
-            color: #3b82f6;
+            color: #dc2626;
         }
         
-        .auth-buttons {
+        .user-menu {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #dc2626;
         }
         
         .btn {
@@ -88,22 +101,31 @@
         }
         
         .btn-primary {
-            background-color: #3b82f6;
+            background-color: #dc2626;
             color: white;
         }
         
         .btn-primary:hover {
-            background-color: #2563eb;
+            background-color: #b91c1c;
         }
         
         .btn-outline {
             background-color: transparent;
-            color: #3b82f6;
-            border: 1px solid #3b82f6;
+            color: #dc2626;
+            border: 1px solid #dc2626;
         }
         
         .btn-outline:hover {
-            background-color: rgba(59, 130, 246, 0.1);
+            background-color: rgba(220, 38, 38, 0.1);
+        }
+        
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #0da271;
         }
         
         /* Main content */
@@ -118,6 +140,65 @@
         
         .page.active {
             display: block;
+        }
+        
+        /* Auth pages */
+        .auth-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #f1f5f9;
+            font-size: 1.8rem;
+        }
+        
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+        
+        .form-group input {
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-size: 1rem;
+        }
+        
+        .auth-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94a3b8;
+        }
+        
+        .auth-link a {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-link a:hover {
+            text-decoration: underline;
         }
         
         /* Home page */
@@ -142,70 +223,25 @@
             color: #cbd5e1;
         }
         
-        .games-section h2, .products-section h2, .profile-section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #f1f5f9;
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-        
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        .game-card {
-            background-color: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .game-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-        
-        .game-card-content {
-            padding: 1.2rem;
-        }
-        
-        .game-card h3 {
-            margin-bottom: 0.5rem;
-            color: #f8fafc;
-        }
-        
-        .game-card p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        /* Products page */
+        /* Products */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
+            margin-top: 2rem;
         }
         
         .product-card {
             background-color: #1e293b;
             border-radius: 10px;
             padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             border: 1px solid #334155;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc2626;
         }
         
         .product-header {
@@ -218,7 +254,7 @@
         .product-icon {
             width: 50px;
             height: 50px;
-            background-color: #3b82f6;
+            background-color: #dc2626;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -234,7 +270,7 @@
         .product-description {
             color: #94a3b8;
             margin-bottom: 1.5rem;
-            flex-grow: 1;
+            min-height: 60px;
         }
         
         .product-price {
@@ -242,6 +278,12 @@
             font-weight: bold;
             color: #10b981;
             margin-bottom: 1.5rem;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         /* Profile page */
@@ -269,52 +311,22 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 1.5rem;
-        }
-        
-        .avatar-options {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .avatar-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border 0.3s;
-        }
-        
-        .avatar-option:hover {
-            border: 2px solid #3b82f6;
-        }
-        
-        .avatar-option.selected {
-            border: 2px solid #10b981;
-        }
-        
-        .avatar-option img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            text-align: center;
         }
         
         .user-avatar {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            overflow: hidden;
+            background-color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #dc2626;
             margin-bottom: 1rem;
-            border: 3px solid #3b82f6;
-        }
-        
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            border: 3px solid #dc2626;
         }
         
         .profile-info {
@@ -346,65 +358,18 @@
             padding: 1.5rem;
         }
         
-        /* Payment page */
-        .payment-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #1e293b;
-            border-radius: 10px;
-            padding: 2rem;
+        .purchase-history {
+            margin-top: 1.5rem;
         }
         
-        .payment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #cbd5e1;
-        }
-        
-        .form-group input, .form-group select {
-            padding: 0.8rem;
-            border-radius: 5px;
-            border: 1px solid #475569;
+        .purchase-item {
             background-color: #0f172a;
-            color: #e2e8f0;
-            font-size: 1rem;
-        }
-        
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 0.5rem;
-        }
-        
-        .payment-method {
-            border: 1px solid #475569;
-            border-radius: 5px;
-            padding: 0.8rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .payment-method:hover {
-            border-color: #3b82f6;
-            background-color: rgba(59, 130, 246, 0.05);
-        }
-        
-        .payment-method.selected {
-            border-color: #10b981;
-            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         /* Admin page */
@@ -412,12 +377,6 @@
             display: grid;
             grid-template-columns: 250px 1fr;
             gap: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .admin-container {
-                grid-template-columns: 1fr;
-            }
         }
         
         .admin-sidebar {
@@ -449,7 +408,7 @@
         }
         
         .admin-nav button.active {
-            background-color: #3b82f6;
+            background-color: #dc2626;
             color: white;
         }
         
@@ -467,23 +426,23 @@
             display: block;
         }
         
-        .products-list {
+        .users-list, .products-list {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
         
-        .product-item {
+        .user-item, .product-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem;
             background-color: #0f172a;
             border-radius: 5px;
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #dc2626;
         }
         
-        .product-actions {
+        .item-actions {
             display: flex;
             gap: 10px;
         }
@@ -491,15 +450,6 @@
         .btn-small {
             padding: 0.3rem 0.8rem;
             font-size: 0.85rem;
-        }
-        
-        .btn-success {
-            background-color: #10b981;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background-color: #0da271;
         }
         
         .btn-danger {
@@ -511,6 +461,7 @@
             background-color: #dc2626;
         }
         
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -567,7 +518,7 @@
         footer {
             background-color: #1e293b;
             padding: 2rem 0;
-            border-top: 2px solid #3b82f6;
+            border-top: 2px solid #dc2626;
             margin-top: 3rem;
         }
         
@@ -581,24 +532,8 @@
         .footer-logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #3b82f6;
+            color: #dc2626;
             margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #3b82f6;
         }
         
         .copyright {
@@ -606,6 +541,7 @@
             font-size: 0.9rem;
         }
         
+        /* Notification */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -624,6 +560,10 @@
             animation: slideIn 0.3s ease-out;
         }
         
+        .notification.error {
+            background-color: #dc2626;
+        }
+        
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -636,7 +576,7 @@
         }
         
         .hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
@@ -645,22 +585,21 @@
     <header>
         <div class="container header-content">
             <div class="logo">
-                <i class="fas fa-coins"></i>
-                <span>GameGold</span>
+                <i class="fas fa-shopping-cart"></i>
+                <span>D3rtyShop</span>
             </div>
             
-            <nav>
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#" class="nav-link" data-page="home">Главная</a></li>
                     <li><a href="#" class="nav-link" data-page="products">Товары</a></li>
                     <li><a href="#" class="nav-link" data-page="profile">Профиль</a></li>
-                    <li><a href="#" class="nav-link" data-page="admin" id="admin-link">Админ-панель</a></li>
+                    <li><a href="#" class="nav-link" data-page="admin" id="admin-link" style="display: none;">Админ-панель</a></li>
                 </ul>
             </nav>
             
-            <div class="auth-buttons">
-                <button class="btn btn-outline" id="login-btn">Войти</button>
-                <button class="btn btn-primary" id="register-btn">Регистрация</button>
+            <div class="user-menu" id="user-menu">
+                <!-- Будет заполнено JavaScript -->
             </div>
         </div>
     </header>
@@ -675,21 +614,63 @@
                 <button class="btn btn-primary" id="go-to-products">Купить сейчас</button>
             </div>
             
-            <div class="games-section">
-                <h2>Популярные игры</h2>
-                <div class="games-grid" id="games-grid">
-                    <!-- Games will be loaded here -->
+            <h2 style="color: #f1f5f9; margin-bottom: 1.5rem; font-size: 2rem;">Популярные игры</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-dragon"></i>
+                        </div>
+                        <div class="product-title">World of Warcraft</div>
+                    </div>
+                    <div class="product-description">
+                        Золото для World of Warcraft - быстрая доставка, гарантия безопасности
+                    </div>
+                    <div class="product-price">от 150 ₽</div>
+                    <div class="product-footer">
+                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="product-title">Genshin Impact</div>
+                    </div>
+                    <div class="product-description">
+                        Primogems и Genesis Crystals для Genshin Impact
+                    </div>
+                    <div class="product-price">от 100 ₽</div>
+                    <div class="product-footer">
+                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <div class="product-title">Elder Scrolls Online</div>
+                    </div>
+                    <div class="product-description">
+                        Золото для ESO - быстрая доставка в течение 15 минут
+                    </div>
+                    <div class="product-price">от 200 ₽</div>
+                    <div class="product-footer">
+                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                    </div>
                 </div>
             </div>
         </section>
         
         <!-- Products page -->
         <section id="products-page" class="page">
-            <div class="products-section">
-                <h2>Доступные товары</h2>
-                <div class="products-grid" id="products-grid">
-                    <!-- Products will be loaded here -->
-                </div>
+            <h1 style="color: #f1f5f9; margin-bottom: 1.5rem; font-size: 2rem;">Все товары</h1>
+            <div class="products-grid" id="products-list">
+                <!-- Товары будут загружены через JS -->
             </div>
         </section>
         
@@ -698,125 +679,86 @@
             <div class="profile-container">
                 <div class="profile-sidebar">
                     <div class="profile-header">
-                        <div class="user-avatar">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user123" alt="Аватар" id="current-avatar">
+                        <div class="user-avatar" id="profile-avatar">
+                            <!-- Инициалы пользователя -->
                         </div>
-                        <h3 id="username">Игрок123</h3>
-                        <p id="user-email">player@example.com</p>
+                        <h3 id="profile-username">Гость</h3>
+                        <p id="profile-email">Не авторизован</p>
                     </div>
                     
                     <div class="profile-info">
                         <div class="info-row">
-                            <span>ID пользователя:</span>
-                            <span id="user-id">#12345</span>
+                            <span>Баланс:</span>
+                            <span id="profile-balance">0 ₽</span>
                         </div>
                         <div class="info-row">
-                            <span>Дата регистрации:</span>
-                            <span id="reg-date">01.01.2023</span>
+                            <span>Покупок:</span>
+                            <span id="profile-purchases">0</span>
                         </div>
                         <div class="info-row">
-                            <span>Куплено товаров:</span>
-                            <span id="purchases-count">15</span>
+                            <span>Статус:</span>
+                            <span id="profile-status">Гость</span>
                         </div>
                     </div>
                     
-                    <div class="balance">
-                        <div>Баланс</div>
-                        <div id="user-balance">1 250 ₽</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-primary" id="deposit-btn">Пополнить баланс</button>
+                        <button class="btn btn-outline" id="logout-btn">Выйти</button>
                     </div>
-                    
-                    <button class="btn btn-primary" id="deposit-btn">Пополнить баланс</button>
                 </div>
                 
                 <div class="profile-content">
-                    <h3>Смена аватарки</h3>
-                    <div class="avatar-options" id="avatar-options">
-                        <!-- Avatar options will be loaded here -->
-                    </div>
-                    
-                    <h3 style="margin-top: 2rem;">История покупок</h3>
+                    <h3>История покупок</h3>
                     <div id="purchase-history">
-                        <!-- Purchase history will be loaded here -->
+                        <p style="color: #94a3b8; text-align: center; padding: 2rem;">У вас пока нет покупок</p>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Payment page -->
-        <section id="payment-page" class="page">
-            <div class="payment-container">
-                <h2 style="margin-bottom: 1.5rem;">Пополнение баланса</h2>
-                <form class="payment-form" id="payment-form">
-                    <div class="form-group">
-                        <label for="amount">Сумма пополнения (₽)</label>
-                        <input type="number" id="amount" min="100" max="10000" step="100" value="500" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Способ оплаты</label>
-                        <div class="payment-methods">
-                            <div class="payment-method" data-method="card">
-                                <i class="fas fa-credit-card" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                                <div>Карта</div>
-                            </div>
-                            <div class="payment-method" data-method="qiwi">
-                                <i class="fas fa-wallet" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                                <div>QIWI</div>
-                            </div>
-                            <div class="payment-method selected" data-method="yoomoney">
-                                <i class="fas fa-ruble-sign" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                                <div>ЮMoney</div>
-                            </div>
-                            <div class="payment-method" data-method="crypto">
-                                <i class="fas fa-bitcoin" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                                <div>Crypto</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="payment-method" value="yoomoney" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email для получения чека</label>
-                        <input type="email" id="email" value="player@example.com" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Перейти к оплате</button>
-                    <button type="button" class="btn btn-outline" id="cancel-payment">Отмена</button>
-                </form>
-            </div>
-        </section>
-        
-        <!-- Admin page -->
+        <!-- Admin page (скрыта для обычных пользователей) -->
         <section id="admin-page" class="page">
             <div class="admin-container">
                 <div class="admin-sidebar">
                     <h3 style="margin-bottom: 1rem;">Админ-панель</h3>
                     <div class="admin-nav">
-                        <button class="admin-nav-btn active" data-section="products">Управление товарами</button>
-                        <button class="admin-nav-btn" data-section="payments">Подтверждение оплат</button>
+                        <button class="admin-nav-btn active" data-section="users">Пользователи</button>
+                        <button class="admin-nav-btn" data-section="products-admin">Товары</button>
+                        <button class="admin-nav-btn" data-section="orders">Заказы</button>
                         <button class="admin-nav-btn" data-section="stats">Статистика</button>
-                        <button class="admin-nav-btn" data-section="settings">Настройки сайта</button>
                     </div>
                 </div>
                 
                 <div class="admin-content">
-                    <!-- Products management -->
-                    <div id="admin-products" class="admin-section active">
+                    <!-- Users management -->
+                    <div id="admin-users" class="admin-section active">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                            <h3>Управление товарами</h3>
-                            <button class="btn btn-primary" id="add-product-btn">Добавить товар</button>
+                            <h3>Управление пользователями</h3>
+                            <button class="btn btn-primary" onclick="adminAddUser()">Добавить пользователя</button>
                         </div>
                         
-                        <div class="products-list" id="admin-products-list">
-                            <!-- Admin products list will be loaded here -->
+                        <div class="users-list" id="users-list">
+                            <!-- Список пользователей -->
                         </div>
                     </div>
                     
-                    <!-- Payments management -->
-                    <div id="admin-payments" class="admin-section">
-                        <h3 style="margin-bottom: 1.5rem;">Подтверждение оплат</h3>
-                        <div id="pending-payments">
-                            <!-- Pending payments will be loaded here -->
+                    <!-- Products management -->
+                    <div id="admin-products-admin" class="admin-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Управление товарами</h3>
+                            <button class="btn btn-primary" onclick="adminAddProduct()">Добавить товар</button>
+                        </div>
+                        
+                        <div class="products-list" id="admin-products-list">
+                            <!-- Список товаров -->
+                        </div>
+                    </div>
+                    
+                    <!-- Orders management -->
+                    <div id="admin-orders" class="admin-section">
+                        <h3 style="margin-bottom: 1.5rem;">Управление заказами</h3>
+                        <div id="orders-list">
+                            <!-- Список заказов -->
                         </div>
                     </div>
                     
@@ -824,17 +766,61 @@
                     <div id="admin-stats" class="admin-section">
                         <h3 style="margin-bottom: 1.5rem;">Статистика</h3>
                         <div id="stats-content">
-                            <!-- Stats will be loaded here -->
+                            <!-- Статистика -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Auth pages -->
+        <section id="login-page" class="page">
+            <div class="auth-container">
+                <h2 class="auth-title">Вход в аккаунт</h2>
+                <form class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Имя пользователя</label>
+                        <input type="text" id="login-username" required>
                     </div>
                     
-                    <!-- Settings -->
-                    <div id="admin-settings" class="admin-section">
-                        <h3 style="margin-bottom: 1.5rem;">Настройки сайта</h3>
-                        <div id="settings-content">
-                            <!-- Settings will be loaded here -->
-                        </div>
+                    <div class="form-group">
+                        <label for="login-password">Пароль</label>
+                        <input type="password" id="login-password" required>
                     </div>
+                    
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+                
+                <div class="auth-link">
+                    Нет аккаунта? <a href="#" id="go-to-register">Зарегистрироваться</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="register-page" class="page">
+            <div class="auth-container">
+                <h2 class="auth-title">Регистрация</h2>
+                <form class="auth-form" id="register-form">
+                    <div class="form-group">
+                        <label for="register-username">Имя пользователя</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">Пароль</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-email">Email (необязательно)</label>
+                        <input type="email" id="register-email">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
+                
+                <div class="auth-link">
+                    Уже есть аккаунт? <a href="#" id="go-to-login">Войти</a>
                 </div>
             </div>
         </section>
@@ -843,82 +829,39 @@
     <!-- Footer -->
     <footer>
         <div class="container footer-content">
-            <div class="footer-logo">GameGold</div>
-            <div class="footer-links">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Условия использования</a>
-                <a href="#">Поддержка</a>
-                <a href="#">Контакты</a>
+            <div class="footer-logo">
+                <i class="fas fa-shopping-cart"></i>
+                D3rtyShop
             </div>
             <div class="copyright">
-                &copy; 2023 GameGold. Все права защищены.
+                &copy; 2023 D3rtyShop. Все права защищены.
             </div>
         </div>
     </footer>
     
-    <!-- Modals -->
-    <!-- Add/Edit Product Modal -->
-    <div class="modal" id="product-modal">
+    <!-- Modal for deposit -->
+    <div class="modal" id="deposit-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Добавить товар</h3>
-                <button class="close-modal" id="close-product-modal">&times;</button>
+                <h3 class="modal-title">Пополнение баланса</h3>
+                <button class="close-modal" id="close-deposit-modal">&times;</button>
             </div>
-            <form id="product-form">
-                <input type="hidden" id="product-id">
-                <div class="form-group">
-                    <label for="product-name">Название товара</label>
-                    <input type="text" id="product-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-game">Игра</label>
-                    <select id="product-game" required>
-                        <option value="">Выберите игру</option>
-                        <option value="World of Warcraft">World of Warcraft</option>
-                        <option value="Elder Scrolls Online">Elder Scrolls Online</option>
-                        <option value="Final Fantasy XIV">Final Fantasy XIV</option>
-                        <option value="Genshin Impact">Genshin Impact</option>
-                        <option value="Lost Ark">Lost Ark</option>
-                        <option value="Diablo IV">Diablo IV</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="product-description">Описание</label>
-                    <input type="text" id="product-description" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-price">Цена (₽)</label>
-                    <input type="number" id="product-price" min="10" step="10" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-amount">Количество валюты</label>
-                    <input type="text" id="product-amount" placeholder="например, 1000 золота" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-stock">Доступное количество</label>
-                    <input type="number" id="product-stock" min="1" value="10" required>
-                </div>
-                <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
-                    <button type="submit" class="btn btn-primary" id="save-product-btn">Сохранить товар</button>
-                    <button type="button" class="btn btn-outline" id="cancel-product-btn">Отмена</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Payment Details Modal -->
-    <div class="modal" id="payment-details-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Реквизиты для оплаты</h3>
-                <button class="close-modal" id="close-payment-modal">&times;</button>
+            <div class="form-group">
+                <label for="deposit-amount">Сумма (₽)</label>
+                <input type="number" id="deposit-amount" min="100" max="10000" step="100" value="500">
             </div>
-            <div id="payment-details-content">
-                <!-- Payment details will be loaded here -->
+            <div class="form-group">
+                <label>Способ оплаты</label>
+                <select id="deposit-method" style="width: 100%; padding: 0.8rem; border-radius: 5px; background-color: #0f172a; color: white; border: 1px solid #475569;">
+                    <option value="card">Банковская карта</option>
+                    <option value="qiwi">QIWI</option>
+                    <option value="yoomoney">ЮMoney</option>
+                    <option value="crypto">Криптовалюта</option>
+                </select>
             </div>
             <div style="margin-top: 1.5rem;">
-                <button class="btn btn-success" id="confirm-payment-btn">Я оплатил</button>
-                <button class="btn btn-outline" id="cancel-payment-details">Отмена</button>
+                <button class="btn btn-success" onclick="processDeposit()">Пополнить</button>
+                <button class="btn btn-outline" onclick="closeModal('deposit-modal')">Отмена</button>
             </div>
         </div>
     </div>
@@ -927,103 +870,565 @@
     <div class="notification" id="notification"></div>
     
     <script>
-        // Основные данные приложения
-        const appData = {
-            currentUser: {
-                id: 1,
-                username: "Игрок123",
-                email: "player@example.com",
-                balance: 1250,
-                avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=user123",
-                registrationDate: "01.01.2023",
-                purchasesCount: 15
-            },
-            isAdmin: true,
-            games: [
-                { id: 1, name: "World of Warcraft", description: "Золото для WoW", icon: "fas fa-dragon" },
-                { id: 2, name: "Elder Scrolls Online", description: "Золото для ESO", icon: "fas fa-scroll" },
-                { id: 3, name: "Final Fantasy XIV", description: "Gil для FFXIV", icon: "fas fa-crystal" },
-                { id: 4, name: "Genshin Impact", description: "Primogems", icon: "fas fa-gem" },
-                { id: 5, name: "Lost Ark", description: "Золото для Lost Ark", icon: "fas fa-anchor" },
-                { id: 6, name: "Diablo IV", description: "Золото для Diablo IV", icon: "fas fa-skull" }
+        // ========== ОСНОВНЫЕ ДАННЫЕ ==========
+        const AppData = {
+            currentUser: null,
+            users: [
+                { id: 1, username: "d3rty", password: "admin123", email: "admin@d3rtyshop.ru", balance: 5000, isAdmin: true, purchases: [], avatar: "D" },
+                { id: 2, username: "testuser", password: "test123", email: "test@example.com", balance: 1500, isAdmin: false, purchases: [], avatar: "T" }
             ],
             products: [
-                { id: 1, game: "World of Warcraft", name: "1000 золота", description: "1000 золотых монет для World of Warcraft", price: 150, amount: "1000 золота", stock: 25 },
-                { id: 2, game: "World of Warcraft", name: "5000 золота", description: "5000 золотых монет для World of Warcraft", price: 700, amount: "5000 золота", stock: 15 },
-                { id: 3, game: "Elder Scrolls Online", name: "100k золота", description: "100 000 золотых для Elder Scrolls Online", price: 200, amount: "100к золота", stock: 30 },
-                { id: 4, game: "Final Fantasy XIV", name: "1M Gil", description: "1 000 000 Gil для Final Fantasy XIV", price: 300, amount: "1M Gil", stock: 20 },
-                { id: 5, game: "Genshin Impact", name: "100 Primogems", description: "100 Primogems для Genshin Impact", price: 100, amount: "100 Primogems", stock: 50 },
-                { id: 6, game: "Lost Ark", name: "10k золота", description: "10 000 золотых для Lost Ark", price: 250, amount: "10к золота", stock: 18 }
+                { id: 1, name: "1000 золота WoW", description: "1000 золотых монет для World of Warcraft", price: 150, game: "World of Warcraft", stock: 25 },
+                { id: 2, name: "5000 золота WoW", description: "5000 золотых монет для World of Warcraft", price: 700, game: "World of Warcraft", stock: 15 },
+                { id: 3, name: "100 Primogems", description: "100 Primogems для Genshin Impact", price: 100, game: "Genshin Impact", stock: 50 },
+                { id: 4, name: "100k золота ESO", description: "100 000 золотых для Elder Scrolls Online", price: 200, game: "Elder Scrolls Online", stock: 30 },
+                { id: 5, name: "10k золота Lost Ark", description: "10 000 золотых для Lost Ark", price: 250, game: "Lost Ark", stock: 18 }
             ],
-            pendingPayments: [
-                { id: 1, user: "Игрок456", amount: 500, method: "ЮMoney", date: "10.11.2023 14:30" },
-                { id: 2, user: "Геймер789", amount: 1000, method: "Карта", date: "09.11.2023 19:15" }
-            ],
-            avatars: [
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user1",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user2",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user3",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user4",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user5",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user6",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user7",
-                "https://api.dicebear.com/7.x/avataaars/svg?seed=user8"
-            ]
+            orders: []
         };
 
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем данные
-            loadGames();
-            loadProducts();
-            loadProfile();
-            loadAdminData();
-            setupEventListeners();
+        // ========== ФУНКЦИИ ДЛЯ РАБОТЫ С ЛОКАЛЬНЫМ ХРАНИЛИЩЕМ ==========
+        function saveData() {
+            localStorage.setItem('d3rtyshop_users', JSON.stringify(AppData.users));
+            localStorage.setItem('d3rtyshop_products', JSON.stringify(AppData.products));
+            localStorage.setItem('d3rtyshop_orders', JSON.stringify(AppData.orders));
+            if (AppData.currentUser) {
+                localStorage.setItem('d3rtyshop_currentUser', JSON.stringify(AppData.currentUser));
+            }
+        }
+
+        function loadData() {
+            const users = localStorage.getItem('d3rtyshop_users');
+            const products = localStorage.getItem('d3rtyshop_products');
+            const orders = localStorage.getItem('d3rtyshop_orders');
+            const currentUser = localStorage.getItem('d3rtyshop_currentUser');
             
-            // Проверяем, является ли пользователь админом
-            if (!appData.isAdmin) {
-                document.getElementById('admin-link').classList.add('hidden');
+            if (users) AppData.users = JSON.parse(users);
+            if (products) AppData.products = JSON.parse(products);
+            if (orders) AppData.orders = JSON.parse(orders);
+            if (currentUser) AppData.currentUser = JSON.parse(currentUser);
+            
+            // Если нет админа, добавляем
+            if (!AppData.users.find(u => u.username === "d3rty")) {
+                AppData.users.push({ 
+                    id: Date.now(), 
+                    username: "d3rty", 
+                    password: "admin123", 
+                    email: "admin@d3rtyshop.ru", 
+                    balance: 5000, 
+                    isAdmin: true, 
+                    purchases: [], 
+                    avatar: "D" 
+                });
+                saveData();
+            }
+        }
+
+        // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
+        function login(username, password) {
+            const user = AppData.users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                AppData.currentUser = { ...user };
+                saveData();
+                updateUI();
+                showPage('home');
+                showNotification('Вы успешно вошли в систему!', 'success');
+                return true;
+            } else {
+                showNotification('Неверное имя пользователя или пароль', 'error');
+                return false;
+            }
+        }
+
+        function register(username, password, email = '') {
+            // Проверяем, нет ли уже такого пользователя
+            if (AppData.users.find(u => u.username === username)) {
+                showNotification('Пользователь с таким именем уже существует', 'error');
+                return false;
             }
             
-            // Показываем уведомление о загрузке
-            showNotification('Добро пожаловать в магазин игровой валюты GameGold!', 'success');
-        });
-
-        // Функция загрузки игр
-        function loadGames() {
-            const gamesGrid = document.getElementById('games-grid');
-            gamesGrid.innerHTML = '';
+            // Создаем нового пользователя
+            const newUser = {
+                id: Date.now(),
+                username,
+                password,
+                email,
+                balance: 0,
+                isAdmin: false,
+                purchases: [],
+                avatar: username.charAt(0).toUpperCase()
+            };
             
-            appData.games.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
-                gameCard.innerHTML = `
-                    <div style="background-color: #334155; height: 150px; display: flex; align-items: center; justify-content: center;">
-                        <i class="${game.icon}" style="font-size: 3rem; color: #3b82f6;"></i>
-                    </div>
-                    <div class="game-card-content">
-                        <h3>${game.name}</h3>
-                        <p>${game.description}</p>
-                    </div>
+            AppData.users.push(newUser);
+            AppData.currentUser = { ...newUser };
+            saveData();
+            updateUI();
+            showPage('home');
+            showNotification('Регистрация успешна! Добро пожаловать!', 'success');
+            return true;
+        }
+
+        function logout() {
+            AppData.currentUser = null;
+            localStorage.removeItem('d3rtyshop_currentUser');
+            updateUI();
+            showPage('home');
+            showNotification('Вы вышли из системы', 'success');
+        }
+
+        // ========== ФУНКЦИИ ДЛЯ UI ==========
+        function updateUI() {
+            const userMenu = document.getElementById('user-menu');
+            const adminLink = document.getElementById('admin-link');
+            
+            if (AppData.currentUser) {
+                // Показываем информацию о пользователе
+                userMenu.innerHTML = `
+                    <div class="user-avatar-small">${AppData.currentUser.avatar}</div>
+                    <span>${AppData.currentUser.username}</span>
+                    <button class="btn btn-outline btn-small" onclick="logout()">Выйти</button>
                 `;
                 
-                gameCard.addEventListener('click', () => {
-                    showProductsForGame(game.name);
-                });
+                // Показываем/скрываем админ-панель
+                if (AppData.currentUser.isAdmin) {
+                    adminLink.style.display = 'block';
+                } else {
+                    adminLink.style.display = 'none';
+                }
                 
-                gamesGrid.appendChild(gameCard);
+                // Обновляем профиль
+                updateProfile();
+            } else {
+                // Показываем кнопки входа/регистрации
+                userMenu.innerHTML = `
+                    <button class="btn btn-outline" onclick="showPage('login')">Войти</button>
+                    <button class="btn btn-primary" onclick="showPage('register')">Регистрация</button>
+                `;
+                adminLink.style.display = 'none';
+            }
+            
+            // Обновляем товары
+            updateProducts();
+        }
+
+        function updateProfile() {
+            if (!AppData.currentUser) return;
+            
+            document.getElementById('profile-avatar').textContent = AppData.currentUser.avatar;
+            document.getElementById('profile-username').textContent = AppData.currentUser.username;
+            document.getElementById('profile-email').textContent = AppData.currentUser.email || 'Не указан';
+            document.getElementById('profile-balance').textContent = AppData.currentUser.balance + ' ₽';
+            document.getElementById('profile-purchases').textContent = AppData.currentUser.purchases.length;
+            document.getElementById('profile-status').textContent = AppData.currentUser.isAdmin ? 'Администратор' : 'Пользователь';
+            
+            // Обновляем историю покупок
+            updatePurchaseHistory();
+        }
+
+        function updateProducts() {
+            const productsList = document.getElementById('products-list');
+            if (!productsList) return;
+            
+            productsList.innerHTML = '';
+            
+            AppData.products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="product-title">${product.name}</div>
+                    </div>
+                    <div class="product-description">
+                        ${product.description}
+                    </div>
+                    <div class="product-price">${product.price} ₽</div>
+                    <div class="product-footer">
+                        ${AppData.currentUser ? 
+                            `<button class="btn btn-primary" onclick="buyProduct(${product.id})">Купить</button>` :
+                            `<button class="btn btn-outline" onclick="showNotification('Войдите в систему для покупок', 'error')">Купить</button>`
+                        }
+                        <span>Осталось: ${product.stock}</span>
+                    </div>
+                `;
+                productsList.appendChild(productCard);
             });
         }
 
-        // Функция загрузки товаров
-        function loadProducts(filterByGame = null) {
-            const productsGrid = document.getElementById('products-grid');
-            productsGrid.innerHTML = '';
+        function updatePurchaseHistory() {
+            const historyContainer = document.getElementById('purchase-history');
+            if (!historyContainer || !AppData.currentUser) return;
             
-            let filteredProducts = appData.products;
-            if (filterByGame) {
-                filteredProducts = appData.products.filter(product => product.game === filterByGame);
+            if (AppData.currentUser.purchases.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 2rem;">У вас пока нет покупок</p>';
+                return;
             }
             
-            filteredProducts.forEach(product => {
-                const productCard =
+            historyContainer.innerHTML = '';
+            AppData.currentUser.purchases.forEach(purchase => {
+                const purchaseItem = document.createElement('div');
+                purchaseItem.className = 'purchase-item';
+                purchaseItem.innerHTML = `
+                    <div>
+                        <strong>${purchase.productName}</strong><br>
+                        <small>${new Date(purchase.date).toLocaleDateString()}</small>
+                    </div>
+                    <div>
+                        <strong>${purchase.price} ₽</strong>
+                    </div>
+                `;
+                historyContainer.appendChild(purchaseItem);
+            });
+        }
+
+        // ========== ФУНКЦИИ ПОКУПКИ ==========
+        function buyProduct(productId) {
+            if (!AppData.currentUser) {
+                showNotification('Войдите в систему для покупок', 'error');
+                return;
+            }
+            
+            const product = AppData.products.find(p => p.id === productId);
+            const user = AppData.currentUser;
+            
+            if (!product) {
+                showNotification('Товар не найден', 'error');
+                return;
+            }
+            
+            if (product.stock <= 0) {
+                showNotification('Товар закончился', 'error');
+                return;
+            }
+            
+            if (user.balance < product.price) {
+                showNotification('Недостаточно средств на балансе', 'error');
+                openModal('deposit-modal');
+                return;
+            }
+            
+            // Совершаем покупку
+            user.balance -= product.price;
+            product.stock -= 1;
+            
+            const purchase = {
+                id: Date.now(),
+                productId: product.id,
+                productName: product.name,
+                price: product.price,
+                date: new Date().toISOString()
+            };
+            
+            user.purchases.push(purchase);
+            
+            // Сохраняем заказ
+            AppData.orders.push({
+                ...purchase,
+                userId: user.id,
+                username: user.username
+            });
+            
+            // Обновляем данные
+            const userIndex = AppData.users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                AppData.users[userIndex] = { ...user };
+            }
+            
+            saveData();
+            updateUI();
+            showNotification(`Покупка успешна! Куплено: ${product.name}`, 'success');
+        }
+
+        // ========== ФУНКЦИИ АДМИН-ПАНЕЛИ ==========
+        function loadAdminUsers() {
+            const usersList = document.getElementById('users-list');
+            if (!usersList) return;
+            
+            usersList.innerHTML = '';
+            AppData.users.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                userItem.innerHTML = `
+                    <div>
+                        <strong>${user.username}</strong>
+                        <div style="font-size: 0.9rem; color: #94a3b8;">
+                            ${user.email || 'Нет email'} | Баланс: ${user.balance} ₽
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        ${user.isAdmin ? '<span style="color: #dc2626;">Админ</span>' : ''}
+                        <button class="btn btn-danger btn-small" onclick="adminDeleteUser(${user.id})">Удалить</button>
+                    </div>
+                `;
+                usersList.appendChild(userItem);
+            });
+        }
+
+        function loadAdminProducts() {
+            const productsList = document.getElementById('admin-products-list');
+            if (!productsList) return;
+            
+            productsList.innerHTML = '';
+            AppData.products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${product.name}</strong>
+                        <div style="font-size: 0.9rem; color: #94a3b8;">
+                            ${product.game} | Цена: ${product.price} ₽ | Осталось: ${product.stock}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-danger btn-small" onclick="adminDeleteProduct(${product.id})">Удалить</button>
+                    </div>
+                `;
+                productsList.appendChild(productItem);
+            });
+        }
+
+        function adminAddUser() {
+            const username = prompt('Введите имя пользователя:');
+            if (!username) return;
+            
+            const password = prompt('Введите пароль:');
+            if (!password) return;
+            
+            const email = prompt('Введите email (необязательно):');
+            
+            const isAdmin = confirm('Сделать пользователя администратором?');
+            
+            const newUser = {
+                id: Date.now(),
+                username,
+                password,
+                email: email || '',
+                balance: 0,
+                isAdmin,
+                purchases: [],
+                avatar: username.charAt(0).toUpperCase()
+            };
+            
+            AppData.users.push(newUser);
+            saveData();
+            loadAdminUsers();
+            showNotification('Пользователь добавлен', 'success');
+        }
+
+        function adminDeleteUser(userId) {
+            if (userId === AppData.currentUser.id) {
+                showNotification('Нельзя удалить самого себя', 'error');
+                return;
+            }
+            
+            if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+                AppData.users = AppData.users.filter(u => u.id !== userId);
+                saveData();
+                loadAdminUsers();
+                showNotification('Пользователь удален', 'success');
+            }
+        }
+
+        function adminAddProduct() {
+            const name = prompt('Название товара:');
+            if (!name) return;
+            
+            const description = prompt('Описание товара:');
+            if (!description) return;
+            
+            const price = parseFloat(prompt('Цена:'));
+            if (!price || isNaN(price)) return;
+            
+            const game = prompt('Для какой игры:');
+            if (!game) return;
+            
+            const stock = parseInt(prompt('Количество на складе:'));
+            if (!stock || isNaN(stock)) return;
+            
+            const newProduct = {
+                id: Date.now(),
+                name,
+                description,
+                price,
+                game,
+                stock
+            };
+            
+            AppData.products.push(newProduct);
+            saveData();
+            updateProducts();
+            loadAdminProducts();
+            showNotification('Товар добавлен', 'success');
+        }
+
+        function adminDeleteProduct(productId) {
+            if (confirm('Вы уверены, что хотите удалить этот товар?')) {
+                AppData.products = AppData.products.filter(p => p.id !== productId);
+                saveData();
+                updateProducts();
+                loadAdminProducts();
+                showNotification('Товар удален', 'success');
+            }
+        }
+
+        // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
+        function showPage(pageName) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Показываем нужную страницу
+            const page = document.getElementById(pageName + '-page');
+            if (page) {
+                page.classList.add('active');
+            }
+            
+            // Если открываем админ-панель, загружаем данные
+            if (pageName === 'admin' && AppData.currentUser && AppData.currentUser.isAdmin) {
+                loadAdminUsers();
+                loadAdminProducts();
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification active ' + (type === 'error' ? 'error' : '');
+            
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 3000);
+        }
+
+        function processDeposit() {
+            const amount = parseInt(document.getElementById('deposit-amount').value);
+            const method = document.getElementById('deposit-method').value;
+            
+            if (!amount || amount < 100 || amount > 10000) {
+                showNotification('Введите сумму от 100 до 10000 рублей', 'error');
+                return;
+            }
+            
+            if (!AppData.currentUser) {
+                showNotification('Войдите в систему для пополнения', 'error');
+                return;
+            }
+            
+            // Пополняем баланс
+            AppData.currentUser.balance += amount;
+            
+            // Обновляем в общем списке пользователей
+            const userIndex = AppData.users.findIndex(u => u.id === AppData.currentUser.id);
+            if (userIndex !== -1) {
+                AppData.users[userIndex].balance = AppData.currentUser.balance;
+            }
+            
+            saveData();
+            updateUI();
+            closeModal('deposit-modal');
+            showNotification(`Баланс пополнен на ${amount} ₽`, 'success');
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем данные
+            loadData();
+            
+            // Обновляем интерфейс
+            updateUI();
+            
+            // Обработчики событий
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+            
+            document.getElementById('go-to-products').addEventListener('click', function() {
+                showPage('products');
+            });
+            
+            document.getElementById('go-to-login').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('login');
+            });
+            
+            document.getElementById('go-to-register').addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('register');
+            });
+            
+            document.getElementById('deposit-btn').addEventListener('click', function() {
+                if (!AppData.currentUser) {
+                    showNotification('Войдите в систему для пополнения', 'error');
+                    return;
+                }
+                openModal('deposit-modal');
+            });
+            
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            
+            document.getElementById('close-deposit-modal').addEventListener('click', function() {
+                closeModal('deposit-modal');
+            });
+            
+            // Обработчики форм
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('login-username').value;
+                const password = document.getElementById('login-password').value;
+                login(username, password);
+            });
+            
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const password = document.getElementById('register-password').value;
+                const email = document.getElementById('register-email').value;
+                register(username, password, email);
+            });
+            
+            // Обработчики админ-панели
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    document.querySelectorAll('.admin-nav-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Скрываем все секции
+                    document.querySelectorAll('.admin-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Показываем нужную секцию
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById('admin-' + sectionId).classList.add('active');
+                });
+            });
+            
+            // Приветственное сообщение
+            if (!AppData.currentUser) {
+                showNotification('Добро пожаловать в D3rtyShop! Зарегистрируйтесь для покупок.', 'success');
+            }
+        });
+    </script>
+</body>
+</html>
