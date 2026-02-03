@@ -628,7 +628,7 @@
                     </div>
                     <div class="product-price">от 150 ₽</div>
                     <div class="product-footer">
-                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                        <button class="btn btn-outline buy-btn" data-product="1000 золота WoW" data-price="150">В корзину</button>
                     </div>
                 </div>
                 
@@ -644,7 +644,7 @@
                     </div>
                     <div class="product-price">от 100 ₽</div>
                     <div class="product-footer">
-                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                        <button class="btn btn-outline buy-btn" data-product="100 Primogems" data-price="100">В корзину</button>
                     </div>
                 </div>
                 
@@ -660,7 +660,7 @@
                     </div>
                     <div class="product-price">от 200 ₽</div>
                     <div class="product-footer">
-                        <button class="btn btn-outline" onclick="showNotification('Товар добавлен в корзину!', 'success')">В корзину</button>
+                        <button class="btn btn-outline buy-btn" data-product="100k золота ESO" data-price="200">В корзину</button>
                     </div>
                 </div>
             </div>
@@ -734,7 +734,7 @@
                     <div id="admin-users" class="admin-section active">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h3>Управление пользователями</h3>
-                            <button class="btn btn-primary" onclick="adminAddUser()">Добавить пользователя</button>
+                            <button class="btn btn-primary" id="admin-add-user-btn">Добавить пользователя</button>
                         </div>
                         
                         <div class="users-list" id="users-list">
@@ -746,7 +746,7 @@
                     <div id="admin-products-admin" class="admin-section">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h3>Управление товарами</h3>
-                            <button class="btn btn-primary" onclick="adminAddProduct()">Добавить товар</button>
+                            <button class="btn btn-primary" id="admin-add-product-btn">Добавить товар</button>
                         </div>
                         
                         <div class="products-list" id="admin-products-list">
@@ -860,8 +860,8 @@
                 </select>
             </div>
             <div style="margin-top: 1.5rem;">
-                <button class="btn btn-success" onclick="processDeposit()">Пополнить</button>
-                <button class="btn btn-outline" onclick="closeModal('deposit-modal')">Отмена</button>
+                <button class="btn btn-success" id="process-deposit-btn">Пополнить</button>
+                <button class="btn btn-outline" id="cancel-deposit-btn">Отмена</button>
             </div>
         </div>
     </div>
@@ -987,7 +987,7 @@
                 userMenu.innerHTML = `
                     <div class="user-avatar-small">${AppData.currentUser.avatar}</div>
                     <span>${AppData.currentUser.username}</span>
-                    <button class="btn btn-outline btn-small" onclick="logout()">Выйти</button>
+                    <button class="btn btn-outline btn-small logout-btn">Выйти</button>
                 `;
                 
                 // Показываем/скрываем админ-панель
@@ -1002,14 +1002,17 @@
             } else {
                 // Показываем кнопки входа/регистрации
                 userMenu.innerHTML = `
-                    <button class="btn btn-outline" onclick="showPage('login')">Войти</button>
-                    <button class="btn btn-primary" onclick="showPage('register')">Регистрация</button>
+                    <button class="btn btn-outline login-btn">Войти</button>
+                    <button class="btn btn-primary register-btn">Регистрация</button>
                 `;
                 adminLink.style.display = 'none';
             }
             
             // Обновляем товары
             updateProducts();
+            
+            // Обновляем обработчики событий
+            attachEventListeners();
         }
 
         function updateProfile() {
@@ -1048,7 +1051,7 @@
                     <div class="product-price">${product.price} ₽</div>
                     <div class="product-footer">
                         ${AppData.currentUser ? 
-                            `<button class="btn btn-primary" onclick="buyProduct(${product.id})">Купить</button>` :
+                            `<button class="btn btn-primary buy-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Купить</button>` :
                             `<button class="btn btn-outline" onclick="showNotification('Войдите в систему для покупок', 'error')">Купить</button>`
                         }
                         <span>Осталось: ${product.stock}</span>
@@ -1131,7 +1134,7 @@
                 username: user.username
             });
             
-            // Обновляем данные
+            // Обновляем в общем списке пользователей
             const userIndex = AppData.users.findIndex(u => u.id === user.id);
             if (userIndex !== -1) {
                 AppData.users[userIndex] = { ...user };
@@ -1160,7 +1163,7 @@
                     </div>
                     <div class="item-actions">
                         ${user.isAdmin ? '<span style="color: #dc2626;">Админ</span>' : ''}
-                        <button class="btn btn-danger btn-small" onclick="adminDeleteUser(${user.id})">Удалить</button>
+                        <button class="btn btn-danger btn-small delete-user-btn" data-id="${user.id}">Удалить</button>
                     </div>
                 `;
                 usersList.appendChild(userItem);
@@ -1183,7 +1186,7 @@
                         </div>
                     </div>
                     <div class="item-actions">
-                        <button class="btn btn-danger btn-small" onclick="adminDeleteProduct(${product.id})">Удалить</button>
+                        <button class="btn btn-danger btn-small delete-product-btn" data-id="${product.id}">Удалить</button>
                     </div>
                 `;
                 productsList.appendChild(productItem);
@@ -1341,15 +1344,9 @@
             showNotification(`Баланс пополнен на ${amount} ₽`, 'success');
         }
 
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем данные
-            loadData();
-            
-            // Обновляем интерфейс
-            updateUI();
-            
-            // Обработчики событий
+        // ========== ОБРАБОТЧИКИ СОБЫТИЙ ==========
+        function attachEventListeners() {
+            // Навигация
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1358,21 +1355,66 @@
                 });
             });
             
-            document.getElementById('go-to-products').addEventListener('click', function() {
+            // Кнопки на главной
+            document.getElementById('go-to-products')?.addEventListener('click', function() {
                 showPage('products');
             });
             
-            document.getElementById('go-to-login').addEventListener('click', function(e) {
+            // Кнопки покупки
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!AppData.currentUser) {
+                        showNotification('Войдите в систему для покупок', 'error');
+                        return;
+                    }
+                    
+                    const productName = this.getAttribute('data-product') || this.getAttribute('data-name');
+                    const productPrice = parseInt(this.getAttribute('data-price'));
+                    
+                    // Для кнопок на главной (у них нет data-id)
+                    if (this.getAttribute('data-id')) {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        buyProduct(productId);
+                    } else {
+                        // Ищем товар по имени и цене
+                        const product = AppData.products.find(p => 
+                            p.name === productName && p.price === productPrice
+                        );
+                        
+                        if (product) {
+                            buyProduct(product.id);
+                        } else {
+                            showNotification('Товар не найден', 'error');
+                        }
+                    }
+                });
+            });
+            
+            // Кнопки входа/регистрации в меню
+            document.querySelector('.login-btn')?.addEventListener('click', function() {
+                showPage('login');
+            });
+            
+            document.querySelector('.register-btn')?.addEventListener('click', function() {
+                showPage('register');
+            });
+            
+            // Кнопка выхода
+            document.querySelector('.logout-btn')?.addEventListener('click', logout);
+            
+            // Формы авторизации
+            document.getElementById('go-to-login')?.addEventListener('click', function(e) {
                 e.preventDefault();
                 showPage('login');
             });
             
-            document.getElementById('go-to-register').addEventListener('click', function(e) {
+            document.getElementById('go-to-register')?.addEventListener('click', function(e) {
                 e.preventDefault();
                 showPage('register');
             });
             
-            document.getElementById('deposit-btn').addEventListener('click', function() {
+            // Кнопка пополнения
+            document.getElementById('deposit-btn')?.addEventListener('click', function() {
                 if (!AppData.currentUser) {
                     showNotification('Войдите в систему для пополнения', 'error');
                     return;
@@ -1380,29 +1422,38 @@
                 openModal('deposit-modal');
             });
             
-            document.getElementById('logout-btn').addEventListener('click', logout);
-            
-            document.getElementById('close-deposit-modal').addEventListener('click', function() {
+            // Модальное окно пополнения
+            document.getElementById('close-deposit-modal')?.addEventListener('click', function() {
                 closeModal('deposit-modal');
             });
             
-            // Обработчики форм
-            document.getElementById('login-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('login-username').value;
-                const password = document.getElementById('login-password').value;
-                login(username, password);
+            document.getElementById('cancel-deposit-btn')?.addEventListener('click', function() {
+                closeModal('deposit-modal');
             });
             
-            document.getElementById('register-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('register-username').value;
-                const password = document.getElementById('register-password').value;
-                const email = document.getElementById('register-email').value;
-                register(username, password, email);
+            document.getElementById('process-deposit-btn')?.addEventListener('click', processDeposit);
+            
+            // Кнопка выхода в профиле
+            document.getElementById('logout-btn')?.addEventListener('click', logout);
+            
+            // Админ-панель
+            document.getElementById('admin-add-user-btn')?.addEventListener('click', adminAddUser);
+            document.getElementById('admin-add-product-btn')?.addEventListener('click', adminAddProduct);
+            
+            // Обработчики удаления в админ-панели
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-user-btn')) {
+                    const userId = parseInt(e.target.getAttribute('data-id'));
+                    adminDeleteUser(userId);
+                }
+                
+                if (e.target.classList.contains('delete-product-btn')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    adminDeleteProduct(productId);
+                }
             });
             
-            // Обработчики админ-панели
+            // Навигация в админ-панели
             document.querySelectorAll('.admin-nav-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     // Убираем активный класс у всех кнопок
@@ -1423,10 +1474,24 @@
                     document.getElementById('admin-' + sectionId).classList.add('active');
                 });
             });
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем данные
+            loadData();
+            
+            // Обновляем интерфейс
+            updateUI();
+            
+            // Обработчики событий
+            attachEventListeners();
             
             // Приветственное сообщение
             if (!AppData.currentUser) {
-                showNotification('Добро пожаловать в D3rtyShop! Зарегистрируйтесь для покупок.', 'success');
+                setTimeout(() => {
+                    showNotification('Добро пожаловать в D3rtyShop! Зарегистрируйтесь для покупок.', 'success');
+                }, 500);
             }
         });
     </script>
